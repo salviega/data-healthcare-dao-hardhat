@@ -1,4 +1,4 @@
-import { ethers, network } from 'hardhat'
+import { ethers, network } from "hardhat"
 import {
 	developmentChains,
 	VOTING_DELAY,
@@ -6,17 +6,17 @@ import {
 	FUNC,
 	PROPOSAL_DESCRIPTION,
 	VALUES
-} from '../helper-hardhat-config'
-import * as fs from 'fs'
-import { moveBlocks } from '../utils/move-blocks'
+} from "../helper-hardhat-config"
+import * as fs from "fs"
+import { moveBlocks } from "../utils/move-blocks"
 
 export async function propose(
 	args: any[],
 	functionToCall: string,
 	proposalDescription: string
 ) {
-	const governor = await ethers.getContract('HealthcareDAO')
-	const funds = await ethers.getContract('Funds')
+	const governor = await ethers.getContract("HealthcareDAO")
+	const funds = await ethers.getContract("Funds")
 	const encodedFunctionCall = funds.interface.encodeFunctionData(
 		functionToCall,
 		args
@@ -51,13 +51,13 @@ function storeProposalId(proposalId: any) {
 	let proposals: any
 
 	if (fs.existsSync(proposalsFile)) {
-		proposals = JSON.parse(fs.readFileSync(proposalsFile, 'utf8'))
+		proposals = JSON.parse(fs.readFileSync(proposalsFile, "utf8"))
 	} else {
 		proposals = {}
 		proposals[chainId] = []
 	}
 	proposals[chainId].push(proposalId.toString())
-	fs.writeFileSync(proposalsFile, JSON.stringify(proposals), 'utf8')
+	fs.writeFileSync(proposalsFile, JSON.stringify(proposals), "utf8")
 }
 
 propose(VALUES, FUNC, PROPOSAL_DESCRIPTION)

@@ -1,8 +1,8 @@
-import { HardhatRuntimeEnvironment } from 'hardhat/types'
-import { DeployFunction } from 'hardhat-deploy/types'
-import verify from '../helper-functions'
-import { networkConfig, developmentChains } from '../helper-hardhat-config'
-import { ethers } from 'hardhat'
+import { HardhatRuntimeEnvironment } from "hardhat/types"
+import { DeployFunction } from "hardhat-deploy/types"
+import verify from "../helper-functions"
+import { networkConfig, developmentChains } from "../helper-hardhat-config"
+import { ethers } from "hardhat"
 
 const deployBox: DeployFunction = async function (
 	hre: HardhatRuntimeEnvironment
@@ -12,9 +12,9 @@ const deployBox: DeployFunction = async function (
 	const { deploy, log } = deployments
 	const { deployer } = await getNamedAccounts()
 
-	log('----------------------------------------------------')
-	log('Deploying Funds contract and waiting for confirmations...')
-	const funds = await deploy('Funds', {
+	log("----------------------------------------------------")
+	log("Deploying Funds contract and waiting for confirmations...")
+	const funds = await deploy("Funds", {
 		from: deployer,
 		args: [],
 		log: true
@@ -29,8 +29,8 @@ const deployBox: DeployFunction = async function (
 		await verify(funds.address, [])
 	}
 
-	const fundsContract = await ethers.getContractAt('Funds', funds.address)
-	const timeLock = await ethers.getContract('TimeLock')
+	const fundsContract = await ethers.getContractAt("Funds", funds.address)
+	const timeLock = await ethers.getContract("TimeLock")
 	const transferTx = await fundsContract.transferOwnership(timeLock.address)
 	await transferTx.wait(1)
 
@@ -41,4 +41,4 @@ const deployBox: DeployFunction = async function (
 }
 
 export default deployBox
-deployBox.tags = ['all', 'box']
+deployBox.tags = ["all", "box"]

@@ -1,19 +1,19 @@
-import * as fs from 'fs'
-import { network, ethers } from 'hardhat'
+import * as fs from "fs"
+import { network, ethers } from "hardhat"
 import {
 	proposalsFile,
 	developmentChains,
 	VOTING_PERIOD
-} from '../helper-hardhat-config'
-import { moveBlocks } from '../utils/move-blocks'
+} from "../helper-hardhat-config"
+import { moveBlocks } from "../utils/move-blocks"
 
 async function main() {
-	const proposals = JSON.parse(fs.readFileSync(proposalsFile, 'utf8'))
+	const proposals = JSON.parse(fs.readFileSync(proposalsFile, "utf8"))
 	const proposalId = proposals[network.config.chainId!].at(-1)
 	// 0 = Against, 1 = For, 2 = Abstain
 	const voteWay = 1
 	const reason =
-		'I like the propol because Data Healthcare DAO need improve your infrastructure'
+		"I like the propol because Data Healthcare DAO need improve your infrastructure"
 	await vote(proposalId, voteWay, reason)
 }
 
@@ -23,8 +23,8 @@ export async function vote(
 	voteWay: number,
 	reason: string
 ) {
-	console.log('Voting...')
-	const governor = await ethers.getContract('HealthcareDAO')
+	console.log("Voting...")
+	const governor = await ethers.getContract("HealthcareDAO")
 	const voteTx = await governor.castVoteWithReason(proposalId, voteWay, reason)
 	const voteTxReceipt = await voteTx.wait(1)
 	console.log(voteTxReceipt.events[0].args.reason)

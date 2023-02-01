@@ -1,18 +1,24 @@
-import '@typechain/hardhat'
-import '@nomiclabs/hardhat-waffle'
-import '@nomiclabs/hardhat-etherscan'
-import '@nomiclabs/hardhat-ethers'
-import 'hardhat-gas-reporter'
-import 'dotenv/config'
-import 'solidity-coverage'
-import 'hardhat-deploy'
-import { HardhatUserConfig } from 'hardhat/config'
-require('dotenv').config()
+import "@typechain/hardhat"
+import "@nomiclabs/hardhat-waffle"
+import "@nomiclabs/hardhat-etherscan"
+import "@nomiclabs/hardhat-ethers"
+import "hardhat-gas-reporter"
+import "dotenv/config"
+import "solidity-coverage"
+import "hardhat-deploy"
+import { HardhatUserConfig } from "hardhat/config"
+require("dotenv").config()
 
-const { PRIVATE_KEY, HYPERSPACE_RPC_URL } = process.env
+const {
+	COINMARKETCAP_API_KEY,
+	ETHERSCAN_API_KEY,
+	HYPERSPACE_RPC_URL,
+	MUMBAI_RPC_URL,
+	PRIVATE_KEY
+} = process.env
 
 const config: HardhatUserConfig = {
-	defaultNetwork: 'hardhat',
+	defaultNetwork: "hardhat",
 	networks: {
 		hardhat: {
 			chainId: 31337,
@@ -24,9 +30,24 @@ const config: HardhatUserConfig = {
 		},
 		hyperspace: {
 			chainId: 3141,
-			accounts: [PRIVATE_KEY || ''],
+			accounts: [PRIVATE_KEY || ""],
 			url: HYPERSPACE_RPC_URL
+		},
+		mumbai: {
+			chainId: 80001,
+			accounts: [PRIVATE_KEY || ""],
+			url: MUMBAI_RPC_URL
 		}
+	},
+	// etherscan: {
+	//   apiKey: ETHERSCAN_API_KEY,
+	// },
+	gasReporter: {
+		enabled: true,
+		currency: "USD",
+		outputFile: "gas-report.txt",
+		noColors: true
+		// coinmarketcap: COINMARKETCAP_API_KEY,
 	},
 	namedAccounts: {
 		deployer: {
@@ -35,17 +56,17 @@ const config: HardhatUserConfig = {
 		}
 	},
 	solidity: {
-		version: '0.8.17',
+		version: "0.8.17",
 		settings: {
 			optimizer: {
 				enabled: true,
 				runs: 200
 			}
 		}
+	},
+	mocha: {
+		timeout: 200000
 	}
-	// etherscan: {
-	//   apiKey: ETHERSCAN_API_KEY,
-	// },
 }
 
 export default config

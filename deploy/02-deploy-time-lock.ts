@@ -1,11 +1,11 @@
-import { HardhatRuntimeEnvironment } from 'hardhat/types'
-import { DeployFunction } from 'hardhat-deploy/types'
-import verify from '../helper-functions'
+import { HardhatRuntimeEnvironment } from "hardhat/types"
+import { DeployFunction } from "hardhat-deploy/types"
+import verify from "../helper-functions"
 import {
 	networkConfig,
 	developmentChains,
 	MIN_DELAY
-} from '../helper-hardhat-config'
+} from "../helper-hardhat-config"
 
 const deployTimeLock: DeployFunction = async function (
 	hre: HardhatRuntimeEnvironment
@@ -15,9 +15,9 @@ const deployTimeLock: DeployFunction = async function (
 	const { deploy, log } = deployments
 	const { deployer } = await getNamedAccounts()
 
-	log('----------------------------------------------------')
-	log('Deploying TimeLock and waiting for confirmations...')
-	const timeLock = await deploy('TimeLock', {
+	log("----------------------------------------------------")
+	log("Deploying TimeLock and waiting for confirmations...")
+	const timeLock = await deploy("TimeLock", {
 		from: deployer,
 		args: [MIN_DELAY, [], [], deployer],
 		log: true
@@ -34,4 +34,4 @@ const deployTimeLock: DeployFunction = async function (
 }
 
 export default deployTimeLock
-deployTimeLock.tags = ['all', 'timelock']
+deployTimeLock.tags = ["all", "timelock"]
