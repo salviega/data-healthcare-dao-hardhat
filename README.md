@@ -1,6 +1,6 @@
 # Data Healthcare DAO - contracts
 
-Cyclimate: FVM space warp hackthon
+Data Healthcare DAO: FVM space warp hackthon
 
 ## Quick start 🏄
 
