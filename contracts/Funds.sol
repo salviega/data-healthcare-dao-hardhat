@@ -21,7 +21,7 @@ contract Funds is Ownable {
 	event StripData(uint256, uint256, address, bool);
 
 	function rentData(uint256 _rentTime) public payable {
-		require(msg.value > 1 ether, "You don't have enough MATIC");
+		require(msg.value > 1, "You don't have enough MATIC");
 
 		queryCounter.increment();
 		uint256 queryId = queryCounter.current();
