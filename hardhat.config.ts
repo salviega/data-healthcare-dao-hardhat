@@ -17,7 +17,7 @@ const {
 	PRIVATE_KEY
 } = process.env
 
-const config: HardhatUserConfig = {
+const config = {
 	defaultNetwork: "hardhat",
 	networks: {
 		hardhat: {
@@ -31,7 +31,8 @@ const config: HardhatUserConfig = {
 		hyperspace: {
 			chainId: 3141,
 			accounts: [PRIVATE_KEY || ""],
-			url: HYPERSPACE_RPC_URL
+			url: HYPERSPACE_RPC_URL,
+			allowUnlimitedContractSize: true,
 		},
 		mumbai: {
 			chainId: 80001,
