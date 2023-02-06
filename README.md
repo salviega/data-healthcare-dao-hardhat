@@ -1,6 +1,6 @@
 # Data Healthcare DAO - contracts
 
-Data Healthcare DAO: FVM space warp hackthon
+Data Healthcare DAO: FVM space warp hackathon
 
 ## Quick start 🏄
 

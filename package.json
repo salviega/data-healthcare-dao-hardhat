@@ -1,5 +1,5 @@
 {
-  "name": "data-healthcare-dao",
+  "name": "data-healthcare-dao-hardhat",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@0.3.0-beta.12",
     "@nomiclabs/hardhat-etherscan": "^3.0.0",
