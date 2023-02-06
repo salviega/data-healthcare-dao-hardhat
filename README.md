@@ -24,6 +24,12 @@ yarn
 yarn start
 ```
 
+> Deploy hyperspace
+
+```
+yarn hardhat deploy --network mumbai --tags DAO
+```
+
 ## Authors 🏗
 
 [LuisFelipe09](https://github.com/LuisFelipe09)

@@ -20,14 +20,13 @@ contract Funds is Ownable {
 	event ArrangeData(uint256, uint256, address, bool);
 	event StripData(uint256, uint256, address, bool);
 
-	function rentData(uint256 _rentTime) public payable {
-		require(msg.value > 1 ether, "You don't have enough MATIC");
+	function rentData(uint256 _dealine) public payable {
+		require(msg.value > 1 , "You don't have enough FIL");
 
 		queryCounter.increment();
 		uint256 queryId = queryCounter.current();
-
-		uint256 currentData = block.timestamp;
-		uint256 deadline = currentData + _rentTime;
+		
+		uint256 deadline =_dealine;
 
 		queriesListByConsultant[msg.sender].push(queryId);
 
