@@ -1,9 +1,13 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types"
 import { DeployFunction } from "hardhat-deploy/types"
 import verify from "../helper-functions"
-import { networkConfig, developmentChains } from "../helper-hardhat-config"
+import {
+	networkConfig,
+	developmentChains,
+	GELATO_FORWARDER
+} from "../helper-hardhat-config"
 
-const deployGovernorContract: DeployFunction = async function (
+const deployHealthcareDAOContract: DeployFunction = async function (
 	hre: HardhatRuntimeEnvironment
 ) {
 	// @ts-ignore
@@ -12,15 +16,15 @@ const deployGovernorContract: DeployFunction = async function (
 	const { deployer } = await getNamedAccounts()
 	const governanceToken = await get("HealthcareToken")
 	const timeLock = await get("TimeLock")
-	const args = [governanceToken.address, timeLock.address]
+	const args = [GELATO_FORWARDER, governanceToken.address, timeLock.address]
 
 	log("----------------------------------------------------")
 	log("Deploying GovernorContract and waiting for confirmations...")
 	const governorContract = await deploy("HealthcareDAO", {
 		from: deployer,
 		args,
-		log: true
-		// waitConfirmations: networkConfig[network.name].blockConfirmations || 1
+		log: true,
+		waitConfirmations: networkConfig[network.name].blockConfirmations || 1
 	})
 
 	log(`HealthcareDAO at ${governorContract.address}`)
@@ -32,5 +36,5 @@ const deployGovernorContract: DeployFunction = async function (
 	}
 }
 
-export default deployGovernorContract
-deployGovernorContract.tags = ["all", "governor"]
+export default deployHealthcareDAOContract
+deployHealthcareDAOContract.tags = ["all", "governor"]

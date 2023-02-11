@@ -10,8 +10,10 @@ import { HardhatUserConfig } from "hardhat/config"
 require("dotenv").config()
 
 const {
+	ALCHEMY_GOERLI_RPC_URL,
 	COINMARKETCAP_API_KEY,
 	ETHERSCAN_API_KEY,
+	POLYGONSCAN_API_KEY,
 	HYPERSPACE_RPC_URL,
 	MUMBAI_RPC_URL,
 	PRIVATE_KEY
@@ -27,6 +29,11 @@ const config: HardhatUserConfig = {
 		localhost: {
 			chainId: 31337,
 			allowUnlimitedContractSize: true
+		},
+		goerli: {
+			chainId: 5,
+			accounts: [PRIVATE_KEY || ""],
+			url: ALCHEMY_GOERLI_RPC_URL
 		},
 		hyperspace: {
 			chainId: 3141,

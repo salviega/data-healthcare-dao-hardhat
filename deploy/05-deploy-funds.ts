@@ -1,10 +1,14 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types"
 import { DeployFunction } from "hardhat-deploy/types"
 import verify from "../helper-functions"
-import { networkConfig, developmentChains } from "../helper-hardhat-config"
+import {
+	networkConfig,
+	developmentChains,
+	GELATO_FORWARDER
+} from "../helper-hardhat-config"
 import { ethers } from "hardhat"
 
-const deployBox: DeployFunction = async function (
+const deployFunds: DeployFunction = async function (
 	hre: HardhatRuntimeEnvironment
 ) {
 	// @ts-ignore
@@ -17,8 +21,8 @@ const deployBox: DeployFunction = async function (
 	const funds = await deploy("Funds", {
 		from: deployer,
 		args: [],
-		log: true
-		// waitConfirmations: networkConfig[network.name].blockConfirmations || 1
+		log: true,
+		waitConfirmations: networkConfig[network.name].blockConfirmations || 1
 	})
 
 	log(`funds at ${funds.address}`)
@@ -40,5 +44,5 @@ const deployBox: DeployFunction = async function (
 	// await rentDataTx.wait(1)
 }
 
-export default deployBox
-deployBox.tags = ["all", "box"]
+export default deployFunds
+deployFunds.tags = ["all", "funds"]

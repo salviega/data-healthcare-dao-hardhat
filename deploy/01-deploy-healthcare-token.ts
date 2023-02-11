@@ -1,7 +1,11 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types"
 import { DeployFunction } from "hardhat-deploy/types"
 import verify from "../helper-functions"
-import { networkConfig, developmentChains } from "../helper-hardhat-config"
+import {
+	networkConfig,
+	developmentChains,
+	GELATO_FORWARDER
+} from "../helper-hardhat-config"
 import { ethers } from "hardhat"
 
 const deployHealthcareToken: DeployFunction = async function (
@@ -16,9 +20,9 @@ const deployHealthcareToken: DeployFunction = async function (
 	log("Deploying HealthCareToken and waiting for confirmations...")
 	const healthcareToken = await deploy("HealthcareToken", {
 		from: deployer,
-		args: [],
-		log: true
-		// waitConfirmations: networkConfig[network.name].blockConfirmations || 1
+		args: [GELATO_FORWARDER],
+		log: true,
+		waitConfirmations: networkConfig[network.name].blockConfirmations || 1
 	})
 
 	log(`HealthCareToken at ${healthcareToken.address}`)
@@ -26,7 +30,7 @@ const deployHealthcareToken: DeployFunction = async function (
 		!developmentChains.includes(network.name) &&
 		process.env.ETHERSCAN_API_KEY
 	) {
-		await verify(healthcareToken.address, [])
+		await verify(healthcareToken.address, [GELATO_FORWARDER])
 	}
 
 	// log(`Minting to ${deployer}`)

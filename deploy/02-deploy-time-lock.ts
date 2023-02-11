@@ -20,8 +20,8 @@ const deployTimeLock: DeployFunction = async function (
 	const timeLock = await deploy("TimeLock", {
 		from: deployer,
 		args: [MIN_DELAY, [], [], deployer],
-		log: true
-		// waitConfirmations: networkConfig[network.name].blockConfirmations || 1,
+		log: true,
+		waitConfirmations: networkConfig[network.name].blockConfirmations || 1
 	})
 
 	log(`TimeLock at ${timeLock.address}`)

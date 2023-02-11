@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity >=0.8.0 <=0.8.17;
+pragma solidity >=0.8.0 <=0.8.18;
 
 import "@openzeppelin/contracts/governance/Governor.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
@@ -7,8 +7,10 @@ import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol
 import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol";
+import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
 
 contract HealthcareDAO is
+	ERC2771Context,
 	Governor,
 	GovernorSettings,
 	GovernorCountingSimple,
@@ -17,9 +19,11 @@ contract HealthcareDAO is
 	GovernorTimelockControl
 {
 	constructor(
+		address trustedForwarder,
 		IVotes _token,
 		TimelockController _timelock
 	)
+		ERC2771Context(trustedForwarder)
 		Governor("Healthcare DAO")
 		GovernorSettings(1 /* 1 block */, 25 /* 5 minutes */, 0)
 		GovernorVotes(_token)
@@ -28,6 +32,24 @@ contract HealthcareDAO is
 	{}
 
 	// The following functions are overrides required by Solidity.
+
+	function _msgData()
+		internal
+		view
+		override(Context, ERC2771Context)
+		returns (bytes calldata)
+	{
+		return ERC2771Context._msgData();
+	}
+
+	function _msgSender()
+		internal
+		view
+		override(Context, ERC2771Context)
+		returns (address sender)
+	{
+		sender = ERC2771Context._msgSender();
+	}
 
 	function votingDelay()
 		public
